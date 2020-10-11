@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# cursor functions
+newline() { 
+  for i in $(eval echo "{1..${1}}")
+  do
+    echo
+  done
+}
+
+overwrite_prev_line() { ansi --previous-line="${1:-1}" --delete-lines=1; ansi --previous-line="${1:-1}" --no-newline; }
+
+# headers
+h1() {
+  title_length="${#1}"
+  space_length=$(( 80 - title_length ))
+  spaces_cmd="printf ' %.0s' {1..$space_length}"
+  spaces="$(eval ${spaces_cmd})"
+
+  newline 1; ansi --bold --bg-color=12 --white --no-newline " > ${1^^}${spaces}"; newline 1
+}
+
+h2() { newline 1; ansi --bg-cyan --black " ${1} "; newline 1; }
+
+# log
+info() { ansi --rgb=73,182,237 " ${1} "; }
+
+success() {
+  local -r should_overwrite="${2:-no}"
+  if [ "${should_overwrite}" == "yes" ]; then
+    overwrite_prev_line 1;
+  fi
+  ansi --green --no-newline "[$(printf '\342\234\224\n')]"; ansi --rgb=73,182,237 " ${1} "
+}
+
+notice() { ansi --yellow --no-newline "[!]"; ansi --rgb=73,182,237 " ${1} "; sleep "${2:-1}"; }
+
+fail() { newline 1; ansi --red --no-newline "[$(printf '\342\235\214\n')]"; ansi --rgb=73,182,237 " ${1} "; sleep "${2:-3}"; exit; }

@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+compat::color() {
+	awk 'BEGIN{
+		s="/\\/\\/\\/\\/\\"; s=s s s s s s s s s s s s s s s s s s s s s s s;
+		for (colnum = 0; colnum<256; colnum++) {
+			r = 255-(colnum*255/255);
+			g = (colnum*510/255);
+			b = (colnum*255/255);
+			sec = (colnum % 46);
+			if (g>255) g = 510-g;
+			if (sec==0) printf "\n";
+			printf "\033[48;2;%d;%d;%dm", r,g,b;
+			printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+			printf "%s\033[0m", substr(s,colnum+1,1);
+		}
+	}'
+	
+	ansi --save-cursor --no-restore
+	ansi --up=2 --insert-chars=2
+	for (( line=1; line<=7; line++ ))
+	do
+		ansi --up=2 --insert-chars=2
+	done
+	ansi --restore-cursor
+}
+
+compat::checks() {
+	# check if terminal supports 256-bit color
+	h2 "Checking color support"
+	info "> TERM is \"${TERM}\""
+	compat::color
+	info "If the above does not show a smooth gradient, then this"
+	info "script may look less colorful but will still execute fine"
+	# sleep 3;
+
+	# checking system environment
+	h2 "Checking system"
+
+	# supported os?
+	if [[ -n "${SUPPORTED_OS[$OS,,]}" ]]; then
+		fail "Unsupported OS ${OS^} detected"
+	fi
+	success "${OS^^} OS detected"
+
+	# home directory?
+	if [ -z "$HOME" ]; then
+		fail "Seems you're \$HOMEless :("
+	fi
+	success "\"HOME\" directory found"
+
+	# ruby?
+	exists ruby || {
+		fail "RUBY not installed"
+	}
+	success "RUBY is installed"
+
+	# git?
+	exists git || {
+		fail "GIT not installed"
+	}
+	success "GIT is installed"
+
+	# svn?
+	exists svn || {
+		fail "SVN not installed"
+	}
+	success "SVN is installed"
+
+	# zsh?
+	exists ${REQUIRED_SHELL} || {
+		fail "ZSH not installed"
+	}
+	success "ZSH is installed"
+
+	# tmux?
+	exists tmux || {
+		fail "TMUX not installed"
+	}
+	success "TMUX is installed"
+}

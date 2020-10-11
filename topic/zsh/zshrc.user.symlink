@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+# default editor
+export EDITOR="nvim"
+
+# default project path
+export REPOS="$HOME/code/repos"
+
+# tmux settings
+ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOCONNECT=true
+ZSH_TMUX_AUTOQUIT=true
+if command -v tmux &>/dev/null; then
+  TMUX_VERSION=$(tmux -V | awk -F " " '{print $2}')
+fi

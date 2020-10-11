@@ -1,0 +1,115 @@
+#!/usr/bin/env zsh
+
+# -----
+# setopts
+# -----
+
+# enable extended globbing
+setopt EXTENDED_GLOB
+# print null on empty glob
+setopt NULL_GLOB
+# disable no match error messages when globbing
+setopt +o NOMATCH
+
+# -----
+# vars
+# -----
+
+typeset -U libs
+typeset -U zsh_files
+typeset -i updated_at
+
+# -----
+# init
+# -----
+
+libs=($DOTFILES/libs/*)
+zsh_files=($DOTFILES/topic/**/*.zsh)
+
+# -----
+# libs
+# -----
+
+for lib in ${(M)libs:#*}; do
+  source $lib
+done
+
+# -----
+# zplugin
+# -----
+
+# zplugin
+# ZINIT[HOME_DIR] -> ~/.zplugin/
+# ZINIT[BIN_DIR] -> ~/.zplugin/bin
+# ZINIT[COMPLETIONS_DIR] -> ~/.zplugin/completions
+# ZINIT[PLUGINS_DIR] -> ~/.zplugin/plugins
+# ZINIT[SNIPPETS_DIR] -> ~/.zplugin/snippets
+# ZINIT[SERVICES_DIR] -> ~/.zplugin/services
+source "${HOME}/.zplugin/bin/zplugin.zsh"
+
+# -----
+# framework
+# -----
+
+# load plugins
+for plugins in ${(M)zsh_files:#*/plugins.zsh}; do
+  source $plugins
+done
+
+# load aliases
+for alias in ${(M)zsh_files:#*/aliases.zsh}; do
+  source $alias
+done
+
+# load configs
+for configs in ${(M)zsh_files:#*/configs.zsh}; do
+  source $configs
+done
+
+# load paths
+for paths in ${(M)zsh_files:#*/paths.zsh}; do
+  source $paths
+done
+
+# compinit hack to make it faster
+autoload -U compaudit compinit
+if [[ $ZSH_DISABLE_COMPFIX != true ]]; then
+  # If completion insecurities exist, warn the user without enabling completions.
+  if ! compaudit &>/dev/null; then
+    # This function resides in the "lib/compfix.zsh" script sourced above.
+    handle_completion_insecurities
+    # Else, enable and cache completions to the desired file.
+  else
+    if [[ -n "${ZSH_COMPDUMP}"(#qN.mh+24) ]]; then
+      compinit -d "${ZSH_COMPDUMP}"
+      compdump
+    else
+      compinit -C
+    fi
+  fi
+else
+  if [[ -n "${ZSH_COMPDUMP}"(#qN.mh+24) ]]; then
+    compinit -i -d "${ZSH_COMPDUMP}"
+    compdump
+  else
+    compinit -C
+  fi
+fi
+
+# load completions
+for completion in ${(M)zsh_files:#*/completion.zsh}; do
+  source $completion
+done
+
+# load key-bindings
+for keys in ${(M)zsh_files:#*/keys.zsh}; do
+  source $keys
+done
+
+# load theme
+for theme in ${(M)zsh_files:#*/zsh/theme.zsh}; do
+  source $theme
+done
+
+# notify
+h2 "To (re)load default ca-certificates store run \"certify\" or \"reloadd!\""
