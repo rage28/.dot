@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-zplugin snippet "OMZ::lib/git.zsh"
+zinit snippet "OMZ::lib/git.zsh"

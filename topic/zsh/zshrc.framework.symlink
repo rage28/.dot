@@ -35,17 +35,17 @@ for lib in ${(M)libs:#*}; do
 done
 
 # -----
-# zplugin
+# zinit
 # -----
 
-# zplugin
-# ZINIT[HOME_DIR] -> ~/.zplugin/
-# ZINIT[BIN_DIR] -> ~/.zplugin/bin
-# ZINIT[COMPLETIONS_DIR] -> ~/.zplugin/completions
-# ZINIT[PLUGINS_DIR] -> ~/.zplugin/plugins
-# ZINIT[SNIPPETS_DIR] -> ~/.zplugin/snippets
-# ZINIT[SERVICES_DIR] -> ~/.zplugin/services
-source "${HOME}/.zplugin/bin/zplugin.zsh"
+# zinit
+# ZINIT[HOME_DIR] -> ~/.zinit/
+# ZINIT[BIN_DIR] -> ~/.zinit/bin
+# ZINIT[COMPLETIONS_DIR] -> ~/.zinit/completions
+# ZINIT[PLUGINS_DIR] -> ~/.zinit/plugins
+# ZINIT[SNIPPETS_DIR] -> ~/.zinit/snippets
+# ZINIT[SERVICES_DIR] -> ~/.zinit/services
+source "${HOME}/.zinit/bin/zinit.zsh"
 
 # -----
 # framework
@@ -72,29 +72,17 @@ for paths in ${(M)zsh_files:#*/paths.zsh}; do
 done
 
 # compinit hack to make it faster
-autoload -U compaudit compinit
-if [[ $ZSH_DISABLE_COMPFIX != true ]]; then
-  # If completion insecurities exist, warn the user without enabling completions.
-  if ! compaudit &>/dev/null; then
-    # This function resides in the "lib/compfix.zsh" script sourced above.
-    handle_completion_insecurities
-    # Else, enable and cache completions to the desired file.
-  else
-    if [[ -n "${ZSH_COMPDUMP}"(#qN.mh+24) ]]; then
-      compinit -d "${ZSH_COMPDUMP}"
-      compdump
-    else
-      compinit -C
-    fi
-  fi
-else
-  if [[ -n "${ZSH_COMPDUMP}"(#qN.mh+24) ]]; then
-    compinit -i -d "${ZSH_COMPDUMP}"
-    compdump
-  else
-    compinit -C
-  fi
-fi
+function zcompile-many() {
+  local f
+  for f; do zcompile -R -- "$f".zwc "$f"; done
+}
+
+# Enable the "new" completion system (compsys).
+autoload -Uz compinit && compinit
+[[ ~/.zcompdump.zwc -nt ~/.zcompdump ]] || zcompile-many ~/.zcompdump
+unfunction zcompile-many
+
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
 # load completions
 for completion in ${(M)zsh_files:#*/completion.zsh}; do
@@ -107,9 +95,11 @@ for keys in ${(M)zsh_files:#*/keys.zsh}; do
 done
 
 # load theme
+# Activate Powerlevel10k Instant Prompt.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 for theme in ${(M)zsh_files:#*/zsh/theme.zsh}; do
   source $theme
 done
-
-# notify
-h2 "To (re)load default ca-certificates store run \"certify\" or \"reloadd!\""

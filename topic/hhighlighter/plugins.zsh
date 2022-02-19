@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
-zplugin ice pick"h.sh"
-zplugin light "paoloantinori/hhighlighter"
+zinit ice pick"h.sh"
+zinit light "paoloantinori/hhighlighter"

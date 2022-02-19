@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 
 exists zsh && {
-  ZPLUGIN_SOURCE="${TOPICS}/zsh/zplugin"
-  ZPLUGIN_TARGET="${HOME}/.zplugin"
+  ZINIT_SOURCE="${TOPICS}/zsh/zinit"
+  ZINIT_TARGET="${HOME}/.zinit"
 
-  if [ -d "$ZPLUGIN_TARGET/bin" ]; then
-    notice "Already installed zplugin. Updating..."
+  if [ -d "$ZINIT_TARGET/bin" ]; then
+    notice "Already installed zinit. Updating..."
     
     pushd . &>/dev/null
-    cd "${ZPLUGIN_TARGET}/bin"
+    cd "${ZINIT_TARGET}/bin"
     rebase
     popd &>/dev/null
 
-    success "Updated zplugin" "yes"
+    success "Updated zinit"
   else
-    info "Installing zplugin..."
-    if [ ! -d "${ZPLUGIN_SOURCE}"/.git ]; then
-      clone https://github.com/zdharma/zinit.git "${ZPLUGIN_SOURCE}"
+    info "Installing zinit..."
+    if [ ! -d "${ZINIT_SOURCE}"/.git ]; then
+      clone https://github.com/zdharma-continuum/zinit.git "${ZINIT_SOURCE}"
     fi
 
     overwrite_prev_line
-    mkdir -p "${ZPLUGIN_TARGET}"
-    link "${ZPLUGIN_SOURCE}" "${ZPLUGIN_TARGET}/bin" false
-    success "Installed zplugin"
+    mkdir -p "${ZINIT_TARGET}"
+    link "${ZINIT_SOURCE}" "${ZINIT_TARGET}/bin" false
+    success "Installed zinit"
   fi
 }

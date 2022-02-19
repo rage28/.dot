@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
-zplugin ice from"gh-r" as"program" bpick"*amd64*"
-zplugin light "junegunn/fzf-bin"
+zinit ice from"gh-r" as"program" bpick"*amd64*"
+zinit light "junegunn/fzf-bin"

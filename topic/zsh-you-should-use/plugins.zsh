@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
-zplugin ice lucid wait"!2"
-zplugin light "MichaelAquilina/zsh-you-should-use"
+zinit ice lucid wait"!2"
+zinit light "MichaelAquilina/zsh-you-should-use"

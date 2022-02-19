@@ -6,11 +6,11 @@ exists mvn && {
       clean)
         ;&
       install)
-        command time mvn -am --offline -DskipTests -Dmaven.test.skip=true "$@"
+        command time mvn -am --offline -Dmaven.test.skip=true "$@"
         ;;
       online)
         1=()
-        command time mvn -am -DskipTests -Dmaven.test.skip=true "$@"
+        command time mvn -am -Dmaven.test.skip=true "$@"
         ;;
       raw)
         1=()
@@ -24,11 +24,11 @@ exists mvn && {
       clean)
         ;&
       install)
-        command time mvn -T 1C -am --offline -DskipTests -Dmaven.test.skip=true "$@"
+        command time mvn -T 1C -am --offline -Dmaven.test.skip=true "$@"
         ;;
       online)
         1=()
-        command time mvn -T 1C -am -DskipTests -Dmaven.test.skip=true "$@"
+        command time mvn -T 1C -am -Dmaven.test.skip=true "$@"
         ;;
       raw)
         command time mvn -T 1C "$@"

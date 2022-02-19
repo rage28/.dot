@@ -45,7 +45,7 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 # Force rehash when command not found
-_force_rehash() {
+function _force_rehash() {
   (( CURRENT == 1 )) && rehash
   return 1
 }
