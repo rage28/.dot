@@ -61,6 +61,7 @@ exists kubectl && {
 	# Namespace management
 	alias kgns='kubectl get namespaces'
 	alias kens='kubectl edit namespace'
+	alias kcns='kubectl create namespace'
 	alias kdns='kubectl describe namespace'
 	alias kdelns='kubectl delete namespace'
 	alias kcn='kubectl config set-context --current --namespace'
