@@ -5,6 +5,7 @@ exists kubectl && {
         bpick"*amd64*" \
         mv"krew-* -> krew" \
         atclone"./krew install krew" \
-        atpull"%atclone"
+        atpull"%atclone" \
+        atload'export PATH="${HOME}/.krew/bin:${PATH}"'
     zinit light "kubernetes-sigs/krew"
 }
