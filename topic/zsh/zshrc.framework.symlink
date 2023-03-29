@@ -78,9 +78,14 @@ function zcompile-many() {
 }
 
 # Enable the "new" completion system (compsys).
-autoload -Uz compinit && compinit
-[[ ~/.zcompdump.zwc -nt ~/.zcompdump ]] || zcompile-many ~/.zcompdump
-unfunction zcompile-many
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+  [[ ~/.zcompdump.zwc -nt ~/.zcompdump ]] || zcompile-many ~/.zcompdump
+  unfunction zcompile-many
+else
+  compinit -C
+fi
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
