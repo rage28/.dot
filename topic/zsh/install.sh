@@ -5,14 +5,7 @@ exists zsh && {
   ZINIT_TARGET="${HOME}/.zinit"
 
   if [ -d "$ZINIT_TARGET/bin" ]; then
-    notice "Already installed zinit. Updating..."
-    
-    pushd . &>/dev/null
-    cd "${ZINIT_TARGET}/bin"
-    rebase
-    popd &>/dev/null
-
-    success "Updated zinit"
+    success "zinit already installed"
   else
     info "Installing zinit..."
     if [ ! -d "${ZINIT_SOURCE}"/.git ]; then

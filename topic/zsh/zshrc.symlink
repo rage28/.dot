@@ -23,6 +23,52 @@ DOTFILES="$HOME/.dotfiles"
 OS="${"$(uname)":l}"
 
 # -----
+# utils
+# -----
+
+source "${DOTFILES}/libs/utils"
+
+# -----
+# zellij
+# -----
+
+# zellij should be activated before p10k
+# https://github.com/zellij-org/zellij/issues/1736#issuecomment-1321157307
+
+ZELLIJ_AUTO_ATTACH=true
+ZELLIJ_AUTO_EXIT=true
+ZELLIJ_CONFIG="${HOME}/.zellij.conf"
+
+# init zellij before p10k
+exists zellij && {
+  if [[ -z "$ZELLIJ" ]]; then
+    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+      ZJ_SESSIONS=$(zellij list-sessions)
+      NUM_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
+
+      if [ "${NUM_SESSIONS}" -ge 2 ]; then
+        zellij attach -c "$(echo "${ZJ_SESSIONS}" | fzf --print-query --height 10%)"
+      else
+        zellij
+      fi
+    fi
+
+    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+      exit
+    fi
+  fi
+}
+
+# -----
+# p10k
+# -----
+
+# Activate Powerlevel10k Instant Prompt early
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# -----
 # user-secret
 # -----
 

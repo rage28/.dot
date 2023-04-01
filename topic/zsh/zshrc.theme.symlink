@@ -5,7 +5,6 @@ export CLICOLOR=true
 # dark theme for Terminal.app
 export LSCOLORS='GxFxCxDxBxegedabagaced'
 
-# powerlevel10k
 POWERLEVEL9K_MODE='nerdfont-complete'
 DEFAULT_USER="${CORP_USER_ID}"
 

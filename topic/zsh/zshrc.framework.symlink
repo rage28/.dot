@@ -19,20 +19,7 @@ typeset -U libs
 typeset -U zsh_files
 typeset -i updated_at
 
-# -----
-# init
-# -----
-
-libs=($DOTFILES/libs/*)
 zsh_files=($DOTFILES/topic/**/*.zsh)
-
-# -----
-# libs
-# -----
-
-for lib in ${(M)libs:#*}; do
-  source $lib
-done
 
 # -----
 # zinit
@@ -98,12 +85,6 @@ done
 for keys in ${(M)zsh_files:#*/keys.zsh}; do
   source $keys
 done
-
-# load theme
-# Activate Powerlevel10k Instant Prompt.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 for theme in ${(M)zsh_files:#*/zsh/theme.zsh}; do
   source $theme
