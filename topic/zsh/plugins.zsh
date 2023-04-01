@@ -12,10 +12,6 @@ zinit wait lucid for \
    atload"!_zsh_autosuggest_start" \
       zsh-users/zsh-autosuggestions
 
-zinit wait lucid for \
-   atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-      marlonrichert/zsh-autocomplete
-
 # -----
 # async
 # -----
