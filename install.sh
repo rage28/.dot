@@ -85,7 +85,7 @@ main() {
   # install
   # -----
 
-  h2 "Installing topics"
+  h2 "Installing & configuring topics"
   find -H "$TOPICS" -maxdepth 2 -name 'install.sh' -not -path '*.git*' |
   while read -r installer;
   do
