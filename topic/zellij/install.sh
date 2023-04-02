@@ -8,7 +8,7 @@ declare ZELLIJ_CONF_SOURCE="${DOTFILES_SRC}/topic/zellij/config"
 declare ZELLIJ_CONF_TARGET="${HOME}/.config/zellij"
 
 exists zellij && {
-  if [ -f "${ZELLIJ_CONF}" ]; then
+  if [ -d "${ZELLIJ_CONF_TARGET}" ]; then
     success "zellij is already configured"
   else
     notice "zellij is getting configured..."
