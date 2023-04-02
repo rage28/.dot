@@ -19,5 +19,4 @@ exists pyenv && {
   }
 
   complete -F _pyenv pyenv
-
 }
