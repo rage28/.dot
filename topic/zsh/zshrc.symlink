@@ -82,8 +82,8 @@ fi
 # -----
 
 source "$HOME"/.zshrc.user
-source "$HOME"/.zshrc.theme
 source "$HOME"/.zshrc.framework
+source "$HOME"/.zshrc.overrides
 
 # -----
 # clear
