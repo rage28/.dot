@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+  # =========================[ Line #1 ]=========================
+  status                  # exit code of the last command
+  command_execution_time  # duration of the last command
+  background_jobs         # presence of background jobs
+  direnv                  # direnv status (https://direnv.net/)
+  kubecontext             # current kubernetes context (https://kubernetes.io/)
+  toolbox                 # toolbox name (https://github.com/containers/toolbox)
+  context                 # user@hostname
+  vim_shell               # vim shell indicator (:sh)
+  # =========================[ Line #2 ]=========================
+  newline                 # \n
+)
