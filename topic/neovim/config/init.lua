@@ -1,3 +1,6 @@
+-- experimental
+vim.loader.enable()
+
 -- Update leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -25,7 +28,14 @@ require("lazy").setup({
     lazy = false,
     version = false, -- always use the latest git commit
   },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  checker = {
+    enabled = true,
+    frequency = 86400,
+    notify = false,
+  },
+  change_detection = {
+    notify = false,
+  },
   performance = {
     rtp = {
       -- disable some rtp plugins

@@ -6,17 +6,18 @@ return {
     },
   },
   {
-    "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope-fzf-native.nvim",
     dependencies = {
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        config = function() require("telescope").load_extension("fzf") end,
-      },
+      { "nvim-telescope/telescope.nvim" },
     },
+    build = "make",
+    config = function() require("telescope").load_extension("fzf") end,
   },
   {
     "nvim-telescope/telescope-live-grep-args.nvim",
+    dependencies = {
+      { "nvim-telescope/telescope.nvim" },
+    },
     config = function() require("telescope").load_extension("live_grep_args") end,
   },
   {
@@ -28,13 +29,6 @@ return {
       local telescope = require("telescope")
 
       telescope.load_extension("file_browser")
-      telescope.setup = {
-        extensions = {
-          file_browser = {
-            hijack_netrw = true,
-          }
-        }
-      }
     end,
   },
 }
