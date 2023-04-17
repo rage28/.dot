@@ -164,4 +164,18 @@ exists kubectl && {
 	alias kej='kubectl edit job'
 	alias kdj='kubectl describe job'
 	alias kdelj='kubectl delete job'
+
+  _k_list_all_resources() {
+    _list=($(kubectl get --raw / |grep "^    \"/api"|sed 's/[",]//g')); 
+    for _api in ${_list[@]}; do
+      _aruyo=$(kubectl get --raw ${_api} | jq .resources); 
+      if [ "x${_aruyo}" != "xnull" ]; then 
+        echo; 
+        echo "===${_api}==="; 
+        kubectl get --raw ${_api} | jq -r ".resources[].name"; 
+      fi; 
+    done
+  }
+
+  alias klistall='_k_list_all_resources'
 }
