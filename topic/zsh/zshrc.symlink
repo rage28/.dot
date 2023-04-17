@@ -32,32 +32,30 @@ source "${DOTFILES}/libs/utils"
 # zellij
 # -----
 
+# zellij is missing a lot of features right now and is not a complete
+# replacement for tmux and should be evaluated again in another 6 months
+
 # zellij should be activated before p10k
 # https://github.com/zellij-org/zellij/issues/1736#issuecomment-1321157307
 
-ZELLIJ_AUTO_ATTACH=true
-ZELLIJ_AUTO_EXIT=true
-ZELLIJ_CONFIG="${HOME}/.zellij.conf"
+# ZELLIJ_AUTO_ATTACH=true
+# ZELLIJ_AUTO_EXIT=true
+# ZELLIJ_CONFIG="${HOME}/.zellij.conf"
 
-# init zellij before p10k
-exists zellij && {
-  if [[ -z "$ZELLIJ" ]]; then
-    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-      ZJ_SESSIONS=$(zellij list-sessions)
-      NUM_SESSIONS=$(echo "${ZJ_SESSIONS}" | wc -l)
+# # init zellij before p10k
+# exists zellij && {
+#   if [[ -z "$ZELLIJ" ]]; then
+#     if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+#       ZJ_SESSIONS=$(zellij list-sessions)
 
-      if [ "${NUM_SESSIONS}" -ge 2 ]; then
-        zellij attach -c "$(echo "${ZJ_SESSIONS}" | fzf --print-query --height 10%)"
-      else
-        zellij
-      fi
-    fi
+#       zellij attach -c "$(echo "${ZJ_SESSIONS}" | fzf --print-query --height 10%)"
+#     fi
 
-    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-      exit
-    fi
-  fi
-}
+#     if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+#       exit
+#     fi
+#   fi
+# }
 
 # -----
 # p10k
