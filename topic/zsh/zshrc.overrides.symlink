@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   # =========================[ Line #1 ]=========================
   status                  # exit code of the last command
