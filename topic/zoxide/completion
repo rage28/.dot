@@ -1,3 +1,4 @@
+#compdef j
 
 # =============================================================================
 #
@@ -95,8 +96,10 @@ fi
 # Commands for zoxide. Disable these using --no-cmd.
 #
 
-builtin alias cd=__zoxide_z
-builtin alias cdi=__zoxide_zi
+echo "aliasing"
+
+\builtin alias j=__zoxide_z
+\builtin alias ji=__zoxide_zi
 
 # =============================================================================
 #

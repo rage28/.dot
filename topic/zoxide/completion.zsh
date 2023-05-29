@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
-exists zoxide && {
-    zinit snippet https://raw.githubusercontent.com/rage28/.dot/master/topic/zoxide/completion
+exists pyenv && {
+  zinit ice as"completion" lucid wait"1" atinit"zpcompinit" mv"completion -> _j"
+  zinit snippet https://github.com/rage28/.dot/blob/master/topic/zoxide/completion
 }
